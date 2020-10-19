@@ -1,0 +1,40 @@
+{
+    "private": true,
+    "workspaces": [
+        "packages/*"
+    ],
+    "scripts": {
+        "bootstrap": "yarn",
+        "clean": "rm -rf yarn.lock node_modules && lerna clean && cargo clean",
+        "lint": "eslint src --ext .js,.ts && cargo fmt",
+        "lint:fix": "eslint src --ext .js,.ts --fix && cargo fmt",
+        "build": "cargo build --release && lerna exec --stream --parallel -- napi build --platform --release",
+        "build:debug": "cargo build && lerna exec --stream --parallel -- napi build --platform",
+        "artifacts": "lerna exec --stream --parallel -- napi artifacts",
+        "prepublishOnly": "lerna exec --stream --parallel -- napi prepublish -t npm"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ykfe/ssr.git"
+    },
+    "author": "zhangyuang",
+    "license": "MIT",
+    "standard": {
+        "parser": "babel-eslint",
+        "ignore": [
+            "**/target/",
+            "**/node_modules/**"
+        ]
+    },
+    "pre-commit": [
+        "lint"
+    ],
+    "devDependencies": {
+        "@types/jest": "^24.0.18",
+        "babel-eslint": "^10.0.2",
+        "eslint-config-standard-vue-ts": "^1.0.3",
+        "lerna": "^3.20.2",
+        "napi-rs": "^0.3.9",
+        "pre-commit": "^1.2.2"
+    }
+}
