@@ -1,5 +1,9 @@
 [workspace]
 
 members = [
-    "./packages/quick-sort"
+    "./packages/bcrypt"
 ]
+
+[profile.release]
+opt-level = 3
+lto = true

@@ -1,5 +1,5 @@
 module.exports = {
-    extends: [
-      'standard-vue-ts'
-    ]
-  }
+  extends: [
+    'standard-vue-ts'
+  ]
+}

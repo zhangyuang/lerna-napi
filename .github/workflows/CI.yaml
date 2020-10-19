@@ -1,5 +1,4 @@
 name: CI
-
 env:
   DEBUG: 'napi:*'
 
@@ -11,7 +10,7 @@ on:
   pull_request:
 
 jobs:
-  build:
+  lint_and_build:
     if: "!contains(github.event.head_commit.message, 'skip ci')"
 
     strategy:
@@ -44,7 +43,7 @@ jobs:
         if: matrix.os == 'windows-latest'
         uses: allenevans/set-env@v1.0.0
         with:
-          LIBCLANG_PATH: 'C:\\Program Files\\LLVM\\bin'
+          LIBCLANG_PATH: 'C:\Program Files\LLVM\bin'
 
       - name: Install
         uses: actions-rs/toolchain@v1
@@ -62,29 +61,39 @@ jobs:
         uses: actions/cache@v1
         with:
           path: ~/.cargo/registry
-          key: stable-${{ matrix.os }}-node@12-cargo-registry-trimmed-${{ hashFiles('**/Cargo.lock') }}
+          key: stable-${{ matrix.os }}-cargo-registry-trimmed-${{ hashFiles('**/Cargo.lock') }}
 
       - name: Cache cargo index
         uses: actions/cache@v1
         with:
           path: ~/.cargo/git
-          key: stable-${{ matrix.os }}gnu-node@12-cargo-index-trimmed-${{ hashFiles('**/Cargo.lock') }}
+          key: stable-${{ matrix.os }}gnu-cargo-index-trimmed-${{ hashFiles('**/Cargo.lock') }}
 
       - name: Cache NPM dependencies
         uses: actions/cache@v1
         with:
           path: node_modules
-          key: npm-cache-${{ matrix.os }}-node@12-${{ hashFiles('yarn.lock') }}
+          key: npm-cache-${{ matrix.os }}-${{ hashFiles('yarn.lock') }}
           restore-keys: |
             npm-cache-
       - name: 'Install dependencies'
         run: yarn install --frozen-lockfile --registry https://registry.npmjs.org
 
-      - name: 'Build'
+      - name: 'Lint'
+        run: yarn lint
+        if: matrix.os == 'ubuntu-latest'
+
+      - name: Cargo test
+        uses: actions-rs/cargo@v1
+        timeout-minutes: 5
+        with:
+          command: test
+          args: -p node-rs-bcrypt --lib -- --nocapture
+
+      - name: Run build
         if: matrix.os != 'macos-latest'
         run: yarn build
-
-      - name: 'Build'
+      - name: Run build
         if: matrix.os == 'macos-latest'
         run: yarn build
         env:
@@ -94,12 +103,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: bindings-${{ env.PLATFORM_NAME }}
-          path: package-template.${{ env.PLATFORM_NAME }}.node
-
-      - name: Clear the cargo caches
-        run: |
-          cargo install cargo-cache --no-default-features --features ci-autoclean
-          cargo-cache
+          path: packages/*/*.${{ env.PLATFORM_NAME }}.node
 
   build_musl:
     if: "!contains(github.event.head_commit.message, 'skip ci')"
@@ -126,17 +130,19 @@ jobs:
 
       - name: 'Build'
         run: |
-          docker run --rm -v $(pwd)/.cargo:/root/.cargo -v $(pwd):/fast-escape -w /fast-escape builder sh -c "yarn build --musl"
+          docker run --rm -v $(pwd)/.cargo:/root/.cargo -v $(pwd):/node-rs -w /node-rs builder sh -c "cargo build --release"
+          docker run --rm -v $(pwd)/.cargo:/root/.cargo -v $(pwd):/node-rs -w /node-rs builder sh -c "./node_modules/.bin/lerna exec --stream --parallel -- napi build --platform --release --musl"
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
           name: bindings-linux-musl
-          path: package-template.linux-musl.node
+          path: packages/**/*.node
 
   test_binding:
     name: Test bindings on ${{ matrix.os }} - node@${{ matrix.node }}
     needs:
-      - build
+      - lint_and_build
+      - build_musl
     strategy:
       fail-fast: false
       matrix:
@@ -166,14 +172,15 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: bindings-${{ env.PLATFORM_NAME }}
-          path: .
+          path: artifacts
 
-      - name: List packages
-        run: ls -R .
+      - name: Move artifacts
+        run: yarn artifacts
         shell: bash
 
-      - name: Test bindings
-        run: yarn test
+      - name: List packages
+        run: ls -R packages
+        shell: bash
 
   test_musl_binding:
     name: Test bindings on alpine - node@${{ matrix.node }}
@@ -195,26 +202,14 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: bindings-linux-musl
-          path: .
+          path: artifacts
 
-      - name: List files
-        run: ls -R .
+      - name: Move artifacts
+        run: yarn artifacts
+
+      - name: List packages
+        run: ls -R packages
         shell: bash
-
-      - name: Run simple tests
-        run: docker run --rm -v $(pwd)/.cargo:/root/.cargo -v $(pwd):/fast-escape -w /fast-escape node:${{ matrix.node }}-alpine sh -c "node ./simple-test.js"
-
-  dependabot:
-    needs:
-      - test_binding
-      - test_musl_binding
-    runs-on: ubuntu-latest
-    steps:
-      - name: auto-merge
-        uses: ridedott/dependabot-auto-merge-action@master
-        with:
-          GITHUB_LOGIN: dependabot[bot]
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   publish:
     name: Publish
@@ -246,18 +241,26 @@ jobs:
         with:
           path: artifacts
 
+      - name: List artifacts
+        run: ls -R artifacts
+        shell: bash
+
       - name: Move artifacts
         run: yarn artifacts
 
       - name: List packages
-        run: ls -R .
+        run: ls -R packages
         shell: bash
-
-      - name: lerna Publish
+      - name: Lerna publish
         run: |
-          find ./packages/ -type d -maxdepth 1 -exec cp LICENSE {} \;
-          echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
-          npx lerna publish from-package --no-verify-access --yes
+          if git log -1 --pretty=%B | grep "^[0-9]\+\.[0-9]\+\.[0-9]\+$";
+            then
+              find ./packages/ -type d -maxdepth 1 -exec cp LICENSE {} \;
+              echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+              npx lerna publish from-package --no-verify-access --yes
+            else
+              echo "Not a release, skipping publish"
+            fi
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
