@@ -6,12 +6,12 @@
     "scripts": {
         "bootstrap": "yarn",
         "clean": "rm -rf yarn.lock node_modules && lerna clean && cargo clean",
-        "lint": "eslint ./ --ext .js && cargo fmt",
-        "lint:fix": "eslint ./ --ext .js --fix && cargo fmt",
-        "artifacts": "lerna exec --stream --parallel -- napi artifacts",
+        "artifacts": "napi artifacts",
         "build": "cargo build --release && lerna exec --stream --parallel -- napi build --platform --release",
         "build:debug": "cargo build && lerna exec --stream --parallel -- napi build --platform",
-        "prepublishOnly": "lerna exec --stream --parallel -- napi prepublish"
+        "prepublishOnly": "lerna exec --stream --parallel -- napi prepublish",
+        "lint": "eslint ./ --ext .js && cargo fmt",
+        "lint:fix": "eslint ./ --ext .js --fix && cargo fmt"
     },
     "repository": {
         "type": "git",
