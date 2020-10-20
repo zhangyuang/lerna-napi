@@ -13,7 +13,7 @@ $ yarn build # build all napi crates
 
 ## How to use
 
-Run `yarn build` will generate [filename].node file which you can require in Node.js directly
+Run `yarn build` will generate `[filename].node` file which you can require in Node.js directly
 
 ## Publish To NPM
 
