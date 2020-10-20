@@ -1,17 +1,38 @@
 {
   "name": "napi-bcrypt",
-  "version": "0.5.0",
+  "version": "0.1.0",
   "description": "Rust bcrypt binding",
-  "keywords": ["bcrypt", "auth", "password", "authentication", "encryption", "crypto", "N-API", "napi-rs", "node-rs"],
+  "keywords": [
+    "bcrypt",
+    "auth",
+    "password",
+    "authentication",
+    "encryption",
+    "crypto",
+    "N-API",
+    "napi-rs",
+    "node-rs"
+  ],
   "author": "yuuang <569105585@qq.com>",
   "license": "MIT",
   "main": "index.js",
   "typings": "index.d.ts",
-  "files": ["index.js", "index.d.ts", "LICENSE", "LICENSE.rust-bcrypt"],
-  "os": ["darwin", "linux", "win32"],
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "LICENSE",
+    "LICENSE.rust-bcrypt"
+  ],
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
   "napi": {
     "name": "bcrypt",
-    "musl": ["linux"]
+    "musl": [
+      "linux"
+    ]
   },
   "engines": {
     "node": ">= 8.9"
