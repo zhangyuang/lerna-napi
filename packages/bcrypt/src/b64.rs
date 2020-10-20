@@ -140,7 +140,6 @@ static STANDARD_TO_BCRYPT: phf::Map<char, &'static str> = phf_map! {
   '=' => "=",
 };
 
-
 /// First encode to base64 standard and then replaces char with the bcrypt
 /// alphabet and removes the '=' chars
 pub fn encode(words: &[u8]) -> String {

@@ -8,14 +8,14 @@ Manage and deploy crates by lerna
 NPM Script
 
 ```bash
-$ yarn build # build all napi crate
+$ yarn build # build all napi crates
 ```
 
 ## How to use
 
 Run `yarn build` will generate [filename].node file which you can require in Node.js directly
 
-## Publish To Npm
+## Publish To NPM
 
 Github CI will publish all crates to NPM automaticlly
 
