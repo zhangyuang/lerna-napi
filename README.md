@@ -1,5 +1,7 @@
 # Napi + Rust + Lerna
 
+![CI](https://github.com/zhangyuang/lerna-napi/workflows/CI/badge.svg)
+
 Develop napi by rust  
 Manage and deploy crates by lerna
 
