@@ -1,20 +1,16 @@
 [package]
-name = "node-rs-bcrypt"
+name = "napi-quick-sort"
 version = "0.1.0"
-authors = ["yuuang <569105585@qq.com>"]
 edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [lib]
 crate-type = ["cdylib"]
 
 [dependencies]
-radix64 = "0.6"
-blowfish = { version = "0.7", features = ["bcrypt"] }
-byteorder = "1"
 napi = { version = "0.5" }
 napi-derive = { version = "0.5" }
-rand = "0.7"
-phf = { version = "0.8", features = ["macros"] }
 
 [target.'cfg(all(unix, not(target_env = "musl")))'.dependencies]
 jemallocator = { version = "0.3", features = ["disable_initial_exec_tls"] }
@@ -22,8 +18,5 @@ jemallocator = { version = "0.3", features = ["disable_initial_exec_tls"] }
 [target.'cfg(windows)'.dependencies]
 mimalloc = { version = "0.1" }
 
-[dev-dependencies]
-quickcheck = "0.9"
-
 [build-dependencies]
-napi-build = { version = "0.2" }
+napi-build = "0.2"

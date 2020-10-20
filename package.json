@@ -10,6 +10,7 @@
         "build": "cargo build --release && lerna exec --stream --parallel -- napi build --platform --release",
         "build:debug": "cargo build && lerna exec --stream --parallel -- napi build --platform",
         "prepublishOnly": "lerna exec --stream --parallel -- napi prepublish",
+        "bench": "lerna run bench --stream --parallel",
         "lint": "eslint ./ --ext .js && cargo fmt",
         "lint:fix": "eslint ./ --ext .js --fix && cargo fmt"
     },
@@ -20,6 +21,8 @@
     "author": "zhangyuang",
     "license": "MIT",
     "devDependencies": {
+        "benchmark": "^2.1.4",
+        "cross-env": "^7.0.2",
         "eslint-config-standard-vue-ts": "^1.0.3",
         "husky": "^4.3.0",
         "lerna": "^3.20.2",

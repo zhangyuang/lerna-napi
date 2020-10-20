@@ -1,0 +1,54 @@
+{
+  "name": "@yuuang/napi-quick-sort",
+  "version": "0.1.0",
+  "description": "Rust quick-sort binding",
+  "keywords": [
+    "quick-sort",
+    "auth",
+    "password",
+    "authentication",
+    "encryption",
+    "crypto",
+    "N-API",
+    "napi-rs",
+    "node-rs"
+  ],
+  "author": "yuuang <569105585@qq.com>",
+  "license": "MIT",
+  "main": "index.js",
+  "typings": "index.d.ts",
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "LICENSE",
+    "LICENSE.rust-quick-sort"
+  ],
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "napi": {
+    "name": "quick-sort",
+    "musl": [
+      "linux"
+    ]
+  },
+  "engines": {
+    "node": ">= 8.9"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhangyuang/lerna-napi.git"
+  },
+  "scripts": {
+    "bench": "cross-env NODE_ENV=production node benchmark/quickSort.js"
+  },
+  "dependencies": {
+    "@node-rs/helper": "^0.4.0"
+  }
+}

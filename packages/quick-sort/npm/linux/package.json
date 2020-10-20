@@ -1,0 +1,26 @@
+{
+  "name": "@yuuang/napi-quick-sort-linux",
+  "version": "0.5.0",
+  "os": ["linux"],
+  "main": "quick-sort.linux.node",
+  "files": ["quick-sort.linux.node"],
+  "description": "Rust quick-sort binding",
+  "keywords": ["quick-sort", "auth", "password", "authentication", "encryption", "crypto", "N-API", "napi-rs", "node-rs"],
+  "author": "yuuang <569105585@qq.com>",
+  "homepage": "https://github.com/napi-rs/node-rs",
+  "license": "MIT",
+  "engines": {
+    "node": ">= 8.9"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/napi-rs/node-rs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/napi-rs/node-rs/issues"
+  }
+}

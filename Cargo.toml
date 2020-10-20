@@ -1,7 +1,8 @@
 [workspace]
 
 members = [
-    "./packages/bcrypt"
+    "./packages/bcrypt",
+    "./packages/quick-sort"
 ]
 
 [profile.release]
