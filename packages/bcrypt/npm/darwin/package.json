@@ -1,5 +1,5 @@
 {
-  "name": "napi-bcrypt-darwin",
+  "name": "@yuuang/napi-bcrypt-darwin",
   "version": "0.5.0",
   "os": ["darwin"],
   "main": "bcrypt.darwin.node",
