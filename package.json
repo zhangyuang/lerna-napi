@@ -11,8 +11,7 @@
         "artifacts": "lerna exec --stream --parallel -- napi artifacts",
         "build": "cargo build --release && lerna exec --stream --parallel -- napi build --platform --release",
         "build:debug": "cargo build && lerna exec --stream --parallel -- napi build --platform",
-        "prepublishOnly": "lerna exec --stream --parallel -- napi prepublish",
-        "version": "lerna version --conventional-commits"
+        "prepublishOnly": "lerna exec --stream --parallel -- napi prepublish"
     },
     "repository": {
         "type": "git",

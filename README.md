@@ -20,6 +20,6 @@ Run `yarn build` will generate `[filename].node` file which you can require in N
 Github CI will publish all crates to NPM automaticlly
 
 ```bash
-$ yarn version # custom version or patch|minor|major
+$ npx lerna version --conventional-commits # custom version or patch|minor|major
 $ git push origin master
 ```
