@@ -1,5 +1,5 @@
 {
-  "name": "@node-rs/bcrypt-darwin",
+  "name": "napi-bcrypt-darwin",
   "version": "0.5.0",
   "os": ["darwin"],
   "main": "bcrypt.darwin.node",

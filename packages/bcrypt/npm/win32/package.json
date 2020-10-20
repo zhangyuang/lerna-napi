@@ -1,5 +1,5 @@
 {
-  "name": "@node-rs/bcrypt-win32",
+  "name": "napi-bcrypt-win32",
   "version": "0.5.0",
   "os": ["win32"],
   "main": "bcrypt.win32.node",

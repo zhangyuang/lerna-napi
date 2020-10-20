@@ -1,5 +1,5 @@
 {
-  "name": "@node-rs/bcrypt-linux",
+  "name": "napi-bcrypt-linux",
   "version": "0.5.0",
   "os": ["linux"],
   "main": "bcrypt.linux.node",
