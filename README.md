@@ -1,6 +1,6 @@
 # Napi + Rust + Lerna
 
-Develop napi by rust
+Develop napi by rust  
 Manage and deploy crates by lerna
 
 ## Getting Start
@@ -20,6 +20,6 @@ Run `yarn build` will generate [filename].node file which you can require in Nod
 Github CI will publish all crates to NPM automaticlly
 
 ```bash
-$ lerna version # custom version or patch|minor|major
+$ yarn version # custom version or patch|minor|major
 $ git push origin master
 ```
