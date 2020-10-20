@@ -6,7 +6,7 @@
   "files": ["bcrypt.darwin.node"],
   "description": "Rust bcrypt binding",
   "keywords": ["bcrypt", "auth", "password", "authentication", "encryption", "crypto", "N-API", "napi-rs", "node-rs"],
-  "author": "LongYinan <lynweklm@gmail.com>",
+  "author": "yuuang <569105585@qq.com>",
   "homepage": "https://github.com/napi-rs/node-rs",
   "license": "MIT",
   "engines": {
