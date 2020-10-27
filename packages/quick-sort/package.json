@@ -1,6 +1,6 @@
 {
   "name": "@yuuang/napi-quick-sort",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Rust quick-sort binding",
   "keywords": [
     "quick-sort",
