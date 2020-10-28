@@ -83,19 +83,13 @@ jobs:
         run: yarn lint
         if: matrix.os == 'ubuntu-latest'
 
-      - - name: 'Test'
-        run: yarn test
-
-      - name: Cargo test
-        uses: actions-rs/cargo@v1
-        timeout-minutes: 5
-        with:
-          command: test
-          args: -p node-rs-bcrypt --lib -- --nocapture
-
       - name: Run build
         if: matrix.os != 'macos-latest'
         run: yarn build
+
+      - name: 'Test'
+        run: yarn test
+
       - name: Run build
         if: matrix.os == 'macos-latest'
         run: yarn build
@@ -144,7 +138,7 @@ jobs:
   test_binding:
     name: Test bindings on ${{ matrix.os }} - node@${{ matrix.node }}
     needs:
-      - lint_and_build
+      - lint_and_test_build
       - build_musl
     strategy:
       fail-fast: false

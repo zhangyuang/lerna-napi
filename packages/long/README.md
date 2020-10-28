@@ -9,3 +9,5 @@ ref: [long.js](https://www.npmjs.com/package/long)
 Please read this [article]((https://medium.com/starbugs/see-why-floating-point-error-can-not-be-avoided-from-ieee-754-809720b32175)) for understand [IEEE754](https://zh.wikipedia.org/wiki/IEEE_754)
 
 ![](https://res.wx.qq.com/op_res/Es_QOqoJrxq9VdEDWD4vrP34vr73D2xIe8rs-z_5IBY_oDoEgYzwtUiySIfedUb6)
+
+[IEEE 754 Calculator](http://weitz.de/ieee/)
