@@ -12,6 +12,7 @@ Please read this [article]((https://medium.com/starbugs/see-why-floating-point-e
 
 [IEEE 754 Calculator](http://weitz.de/ieee/)
 
-### Why JS MAX_SAFE_INTEGER is 2^53 - 1
+### Why MAX_SAFE_INTEGER in JavaScript is 2^53 - 1
 
-As IEEE754 says, double type variable has 1 sign, 11 exponent, 52 fraction。Due to Number 1 is the value beginning default, so the exponent max value is 53. why MAX_SAFE_INTEGER is 2^53 - 1 because if number is more than 2^53 such as 2^53 and 2^53 + 1 whose fraction will be same.
+As IEEE754 says, double type variable has 1 sign, 11 exponent, 52 fraction。  
+Due to Number 1 is the value beginning default, so the exponent max value is 53. why MAX_SAFE_INTEGER is 2^53 - 1 because if number is more than 2^53 such as 2^53 and 2^53 + 1 whose fraction will be same.
