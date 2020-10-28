@@ -87,14 +87,14 @@ jobs:
         if: matrix.os != 'macos-latest'
         run: yarn build
 
-      - name: 'Test'
-        run: yarn test
-
       - name: Run build
         if: matrix.os == 'macos-latest'
         run: yarn build
         env:
           MACOSX_DEPLOYMENT_TARGET: '10.13'
+          
+      - name: 'Test'
+        run: yarn test
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
