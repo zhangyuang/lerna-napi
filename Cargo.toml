@@ -1,7 +1,7 @@
 [workspace]
 
 members = [
-    "./packages/bcrypt",
+    "./packages/long",
     "./packages/quick-sort"
 ]
 

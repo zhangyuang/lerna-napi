@@ -1,9 +1,9 @@
 {
-  "name": "@yuuang/napi-bcrypt",
-  "version": "0.1.7",
-  "description": "Rust bcrypt binding",
+  "name": "@yuuang/napi-long",
+  "version": "0.1.1",
+  "description": "Rust long binding",
   "keywords": [
-    "bcrypt",
+    "long",
     "auth",
     "password",
     "authentication",
@@ -21,7 +21,7 @@
     "index.js",
     "index.d.ts",
     "LICENSE",
-    "LICENSE.rust-bcrypt"
+    "LICENSE.rust-long"
   ],
   "os": [
     "darwin",
@@ -29,7 +29,7 @@
     "win32"
   ],
   "napi": {
-    "name": "bcrypt",
+    "name": "long",
     "musl": [
       "linux"
     ]
@@ -46,13 +46,9 @@
     "url": "git+https://github.com/zhangyuang/lerna-napi.git"
   },
   "scripts": {
-    "bench": "cross-env NODE_ENV=production node benchmark/bcrypt.js"
+    "bench": "cross-env NODE_ENV=production node benchmark/quickSort.js"
   },
   "dependencies": {
     "@node-rs/helper": "^0.4.0"
-  },
-  "devDependencies": {
-    "bcrypt": "^5.0.0",
-    "bcryptjs": "^2.4.3"
   }
 }

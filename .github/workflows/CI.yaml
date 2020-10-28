@@ -10,7 +10,7 @@ on:
   pull_request:
 
 jobs:
-  lint_and_build:
+  lint_and_test_build:
     if: "!contains(github.event.head_commit.message, 'skip ci')"
 
     strategy:
@@ -82,6 +82,9 @@ jobs:
       - name: 'Lint'
         run: yarn lint
         if: matrix.os == 'ubuntu-latest'
+
+      - - name: 'Test'
+        run: yarn test
 
       - name: Cargo test
         uses: actions-rs/cargo@v1
