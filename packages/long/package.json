@@ -50,5 +50,8 @@
   },
   "dependencies": {
     "@node-rs/helper": "^0.4.0"
+  },
+  "devDependencies": {
+    "long": "^4.0.0"
   }
 }

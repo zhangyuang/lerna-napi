@@ -18,7 +18,7 @@ $ yarn build # build all napi crates
 
 Run `yarn build` will generate `[filename].node` file which you can require in Node.js directly
 
-## Publish To NPM
+## Publish in NPM
 
 Github CI will publish all crates to NPM automaticlly
 

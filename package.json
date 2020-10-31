@@ -5,7 +5,7 @@
     ],
     "scripts": {
         "bootstrap": "yarn",
-        "clean": "rm -rf yarn.lock node_modules && lerna clean && cargo clean",
+        "clean": "rm -rf yarn.lock package-lock.json node_modules && lerna clean && cargo clean",
         "artifacts": "napi artifacts",
         "build": "cargo build --release && lerna exec --stream --parallel -- napi build --platform --release",
         "build:debug": "cargo build && lerna exec --stream --parallel -- napi build --platform",
@@ -19,7 +19,7 @@
         "type": "git",
         "url": "git+https://github.com/zhangyuang/lerna-napi.git"
     },
-    "author": "zhangyuang",
+    "author": "yuuang",
     "license": "MIT",
     "devDependencies": {
         "benchmark": "^2.1.4",
@@ -35,12 +35,5 @@
         "hooks": {
             "pre-commit": "yarn lint && cargo fmt --all"
         }
-    },
-    "jest": {
-        "coverageReporters": [
-            "json-summary",
-            "text",
-            "lcov"
-        ]
     }
 }
