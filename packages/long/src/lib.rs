@@ -1,73 +1,75 @@
-use std::convert::TryFrom;
+// use std::convert::TryFrom;
 
-use napi::{register_module, CallContext, JsNumber, JsObject, Module, Result};
-use napi_derive::js_function;
+// use napi::{register_module, CallContext, JsNumber, JsObject, Module, Result};
+// use napi_derive::js_function;
 
-#[cfg(all(unix, not(target_env = "musl")))]
-#[global_allocator]
-static ALLOC: jemallocator::Jemalloc = jemallocator::Jemalloc;
+// #[cfg(all(unix, not(target_env = "musl")))]
+// #[global_allocator]
+// static ALLOC: jemallocator::Jemalloc = jemallocator::Jemalloc;
 
-#[cfg(windows)]
-#[global_allocator]
-static ALLOC: mimalloc::MiMalloc = mimalloc::MiMalloc;
+// #[cfg(windows)]
+// #[global_allocator]
+// static ALLOC: mimalloc::MiMalloc = mimalloc::MiMalloc;
 
-register_module!(example, init);
+// register_module!(example, init);
 
-fn init(module: &mut Module) -> Result<()> {
-  module.create_named_method("quickSort", quick_sort)?;
-  Ok(())
+// fn init(module: &mut Module) -> Result<()> {
+//   // module.create_named_method("quickSort", quick_sort)?;
+//   Ok(())
+// }
+
+// // #[js_function(1)]
+// // fn long(ctx: CallContext) -> Result<JsObject> {
+// // }
+
+// #[cfg(test)]
+// mod tests {
+//   use super::*;
+
+//   #[test]
+//   fn tests() {
+//     // quick_sort_rust(vec![2, 1, 3, 4, 2]);
+//   }
+// }
+
+pub struct Long {
+  // 分别用 高低位 32 位有符号数 组成 64 位双精度整数
+  low: i32,       // 低 32 位有符号数
+  high: i32,      // 高 32 位有符号数
+  unsigned: bool, // 生成的结果是否是无符号的
 }
 
-#[js_function(1)]
-fn quick_sort(ctx: CallContext) -> Result<JsObject> {
-  let arr = ctx.get::<JsObject>(0)?;
-  let len = arr.get_array_length()?;
-  let mut arr_vec: Vec<u32> = vec![];
-  for i in 0..len {
-    // jsObject -> vec
-    let val_u32 = u32::try_from(arr.get_element::<JsNumber>(i)?)?;
-    arr_vec.push(val_u32)
+impl Long {
+  fn is_zero(&self) -> bool {
+    self.low == 0 && self.high == 0
   }
-  arr_vec = quick_sort_rust(arr_vec);
-  let mut arr_res = ctx.env.create_array_with_length(len as usize)?;
-  for i in 0..len {
-    arr_res.set_element(i, ctx.env.create_uint32(arr_vec[i as usize])?)?;
+  // fn fromNumber(&self, val: i64, unsigned: bool) -> {
+  //   //
+  // }
+  fn get_zero(&self) -> Long {
+    self.from_int(0, true)
   }
-  Ok(arr_res)
-}
+  fn get_uzero(&self) -> Long {
+    self.from_int(0, false)
+  }
 
-fn quick_sort_rust(mut arr: Vec<u32>) -> Vec<u32> {
-  // 快速排序 by 阮一峰版本，需要开辟额外空间不是最佳答案
-  let len = arr.len();
-  if len == 1 || len == 0 {
-    return arr;
-  }
-  let mut left_vec = vec![];
-  let mut right_vec = vec![];
-  let sign_val = arr[len / 2];
-  arr.remove(len / 2);
-  for i in 0..arr.len() {
-    let val = arr[i];
-    if val < sign_val {
-      left_vec.push(val);
+  fn from_int(&self, value: i32, unsigned: bool) -> Long {
+    if unsigned {
+      // 无符号数
     } else {
-      right_vec.push(val)
+      // 有符号数
+    }
+    Long {
+      low: 1,
+      high: 1,
+      unsigned: false,
     }
   }
-  [
-    quick_sort_rust(left_vec),
-    vec![sign_val],
-    quick_sort_rust(right_vec),
-  ]
-  .concat()
-}
-
-#[cfg(test)]
-mod tests {
-  use super::*;
-
-  #[test]
-  fn tests() {
-    quick_sort_rust(vec![2, 1, 3, 4, 2]);
+  fn from_bits(&self, lowBits: i32, highBits: i32, unsigned: bool) -> Long {
+    Long {
+      low: lowBits,
+      high: highBits,
+      unsigned: unsigned,
+    }
   }
 }
